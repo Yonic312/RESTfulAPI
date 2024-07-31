@@ -1,6 +1,6 @@
 <table border="1">
 <tr><td colspan="2">
-    1. 작성자 : 김태익 <br>
+    1. 작성자 : 조현준 <br>
     2. 용도 : RESTful API 서버와 클라이언트 <br>
     3. 내용 : 방명록 페이지 나누기 <br>
 </td></tr>
