@@ -1,0 +1,85 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<style>
+ .high-score{
+  background-color:#997766;
+ }
+</style>
+
+<body>
+<div  th:replace="~{include/top}"></div>
+
+
+<section>
+<br>
+<div align="center"  > <h2> 성적처리 목록보기  </h2> </div>
+<div align="center"  > 
+
+<table border=1  width=800 >
+<tr  align="center"> <td>순서 </td> <td>학번 </td><td>이름 </td>
+   <td>국어 </td><td> 영어 </td><td> 수학 </td><td> 역사 </td>
+   <td>합계 </td><td> 평균 </td><td> 평점 </td>
+   </tr>
+
+<tr th:each="m, mStat : ${li}" align="center"  th:classappend="${#numbers.formatDecimal((m.kor + m.eng + m.math + m.hist) * 1.0 / 4, 1, 1)}>= 90 ? 'high-score' : ''">
+
+  <th:black > 
+    <td > [[${mStat.count}]] </td>
+    <td > [[${m.sno}]] </td>
+    <td > [[${m.sname}]] </td>
+    <td > [[${m.kor}]] </td>
+    <td > [[${m.eng}]] </td>
+    <td > [[${m.math}]] </td>
+    <td > [[${m.hist}]] </td>
+    
+	<td >[[${m.kor +m.eng+m.math+m.hist }]] </td>
+	<td >
+	<span th:text="${#numbers.formatDecimal((m.kor + m.eng + m.math + m.hist) / 4.0, 1, 1)}"></span>
+	</td>
+	
+	<td >
+	<div>
+	<p th:if="${#numbers.formatDecimal((m.kor + m.eng + m.math + m.hist) * 1.0 / 4, 1, 1)} >= 90"> 수 </p>
+	<p th:if="${#numbers.formatDecimal((m.kor + m.eng + m.math + m.hist) * 1.0 / 4, 1, 1)} >= 80 and ${#numbers.formatDecimal((m.kor + m.eng + m.math + m.hist) * 1.0 / 4, 1, 1)} < 90"> 우 </p>
+	<p th:if="${#numbers.formatDecimal((m.kor + m.eng + m.math + m.hist) * 1.0 / 4, 1, 1)} < 80"> F </p>
+    </div>
+	 </td>
+	
+  </th:black>
+    
+</tr>
+
+<tr align="center" >
+
+    <td colspan=3  align="center"  > 합계 </td>
+
+    <td ><span th:text="${#aggregates.sum(li.![kor]) }"></span> </td>
+    <td ><span th:text="${#aggregates.sum(li.![eng]) }"></span> </td>
+    <td ><span th:text="${#aggregates.sum(li.![math]) }"></span> </td>
+    <td ><span th:text="${#aggregates.sum(li.![hist]) }"></span> </td>
+    <td ><span th:text="${#aggregates.sum(li.![kor]) + #aggregates.sum(li.![eng])+ #aggregates.sum(li.![math])+ #aggregates.sum(li.![hist]) } "></span> </td>
+    <td ><span th:text="${(#aggregates.sum(li.![kor]) + #aggregates.sum(li.![eng])+ #aggregates.sum(li.![math])+ #aggregates.sum(li.![hist])) / 4.0 } "></span> </td>
+	<td > &nbsp; </td>	
+</tr>
+<tr align="center">
+
+    <td colspan=3 align="center" > 평균 </td>
+
+    <td ><span th:text="${#numbers.formatDecimal(#aggregates.sum(li.![kor])*1.0 / #lists.size(li), 1, 1)}"> </span> </td>
+    <td ><span th:text="${#numbers.formatDecimal(#aggregates.sum(li.![eng])*1.0 / #lists.size(li), 1, 1)}"> </span> </td>
+    <td ><span th:text="${#numbers.formatDecimal(#aggregates.sum(li.![math])*1.0 / #lists.size(li), 1, 1)}"> </span> </td>
+    <td ><span th:text="${#numbers.formatDecimal(#aggregates.sum(li.![hist])*1.0 / #lists.size(li), 1, 1)}"> </span> </td>
+    <td ><span th:text="${#numbers.formatDecimal((#aggregates.sum(li.![kor]) + #aggregates.sum(li.![eng])+ #aggregates.sum(li.![math])+ #aggregates.sum(li.![hist])) *1.0 / #lists.size(li), 1, 1)}"> </span> </td>     
+    <td ><span th:text="${#numbers.formatDecimal(((#aggregates.sum(li.![kor]) + #aggregates.sum(li.![eng])+ #aggregates.sum(li.![math])+ #aggregates.sum(li.![hist]))/4.0) *1.0 / #lists.size(li), 1, 1)}"> </span> </td>  
+	<td > &nbsp; </td>	
+</tr>
+
+</table>
+
+</div>
+<br>
+</section>
+
+<div  th:replace="~{include/bottom::footer}"></div>
+</body>
+</html>

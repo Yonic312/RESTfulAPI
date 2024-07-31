@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div  th:replace="~{include/top}"></div>
+<section>
+<br>
+<div align="center"  > <h2> 게시판 목록보기  </h2> </div>
+<div align="center"  > 
+
+<span th:text="${'레코드수:' + #lists.size(li)}"> </span>
+<span th:text="${' 나이 합:' + #aggregates.sum(li.![age]) }"> </span>
+<span th:text="${' 나이평균:' + #numbers.formatDecimal(#aggregates.sum(li.![age])*1.0 / #lists.size(li), 1, 1)}"> </span>
+
+
+<table border=1  width=600 >
+<tr  align="center"> <td>순서 </td> <td>번호 </td><td>이름 </td><td>나이 </td><td> 날짜(String형) </td><td  align="center"> 날짜(Date형) </td></tr>
+
+<tr th:each="m, mStat: ${li} "  align="center"    >
+
+    <td > [[${mStat.count}]] </td>
+	<td th:text="${m.idx}" />
+	<td > <a th:href="@{/board/getBoard(idx=${m.idx},name=${m.name})}" th:text="${m.name}" ></a> 
+
+	</td>
+	<td th:text="${m.age}" />
+
+	<td >  [[${m.regdate.substring(0, 4)}]]년  
+	       [[${m.regdate.substring(5, 7)}]]월  
+	       [[${m.regdate.substring(8, 10)}]]일</td>
+	<td align="center">
+	[[${#dates.format(m.regdate2, 'yyyy')}]]년
+	[[${#dates.format(m.regdate2, 'MM')}]]월
+	[[${#dates.format(m.regdate2, 'dd')}]]일
+	</td>
+	
+</tr>
+</table>
+
+<form action="/board/getBoardList">
+<select name = ch1 >
+  <option value="name" > name  </option>
+  <option value="age" >  age  </option>
+</select>
+<input  type=text  name="ch2" >
+<input  type=submit value="검색하기" >
+</form>
+
+
+</div>
+<br>
+</section>
+
+<div  th:replace="~{include/bottom::footer}"></div>
+</body>
+</html>

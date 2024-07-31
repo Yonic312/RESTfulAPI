@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.example.guestBook.GuestBookDao">
+ 
+ <select id="list"   parameterType="com.example.guestBook.GuestBookVO"
+                         resultType="com.example.guestBook.GuestBookVO" >
+
+select rownum, k.* from
+	(select rownum as rnum, P.*
+from
+    (select * from guestbook 
+    <if test="ch1.equals('name')">
+    where name like '%' || #{ch2} || '%'
+    </if>
+    <if test="!ch1.equals('name')">
+    where memo like '%' || #{ch2} || '%'
+    </if>
+    order by IDX desc
+    )P
+    
+    <![CDATA[ where rownum <= #{qe} ]]>
+    )k    
+    <![CDATA[ where rnum >= #{qs} ]]>
+    
+ 	
+
+ </select>	
+ 
+ <select id="list2"   parameterType="com.example.guestBook.GuestBookVO"
+                         resultType="com.example.guestBook.GuestBookVO" >
+
+select rownum, k.* from
+	(select rownum as rnum, P.*
+from
+    (select * from guestbook 
+    <if test="ch1.equals('name')">
+    where name like '%' || #{ch2} || '%'
+    </if>
+    <if test="!ch1.equals('name')">
+    where memo like '%' || #{ch2} || '%'
+    </if>
+    order by IDX desc
+    )P
+    
+    <![CDATA[ where rownum <= #{tc} ]]>
+    )k    
+    <![CDATA[ where rnum >= #{qs} ]]>
+    
+ 	
+
+ </select>	
+  
+ <insert id="insert"  parameterType="com.example.guestBook.GuestBookVO">
+  	insert into guestbook(idx, name, memo, age)
+ 	VALUES(guestidx.nextval, #{name},#{memo},#{age})
+ </insert>
+
+ <select id="getTc" resultType="int" >
+   select count(*) from guestbook
+    <if test="ch1.equals('name')">
+    where name like '%' || #{ch2} || '%'
+    </if>
+    <if test="ch1.equals('memo')">
+    where memo like '%' || #{ch2} || '%'
+    </if>
+ </select>
+ </mapper>

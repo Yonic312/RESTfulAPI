@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.portoneT.PortOneDao">
+ 
+<insert id="insert" parameterType="com.example.portoneT.PortOneVO">
+    insert into mpay 
+    values (idx.nextval , #{mpaynum},#{membernum}, #{mpaymethod}, #{mpayproduct}, #{mpayprice}, #{mpaydate},
+            #{mpaygym}, #{mpayperiod}, #{mpaytime},#{trainername}, #{ggoodsnum}, null, #{gymnum}, 0)
+</insert>
+
+<select id="edit" parameterType="com.example.portoneT.PortOneVO"  
+                  resultType="com.example.portoneT.PortOneVO" >
+
+   select *  from mpay where  mpaynum = #{mpaynum}
+
+</select>
+
+</mapper>

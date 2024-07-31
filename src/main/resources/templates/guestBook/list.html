@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div  th:replace="~{include/top}"></div>
+<section>
+<br>
+<div align="center"  > <h2> 게시판 목록보기  </h2> </div>
+<div align="center"  > 
+tc : [[${tc}]] &nbsp; tp : [[${tp}]] &nbsp; pz : [[${pz}]] &nbsp; <br>
+nowPage : [[${nowPage}]] &nbsp; 하단 시작 : [[${ps}]] &nbsp; 하단 끝 : [[${pe}]] 
+
+<table border=1  width=600 >
+<tr  align="center">
+<td> 순서 </td> <td> 이름 </td><td> 메모 </td>
+<td> 나이 </td><td> 날짜(String형) </td>
+</tr>
+
+<tr th:each="m, mStat: ${li} "  align="center">
+
+<td> [[${m.idx}]] </td> <td> [[${m.name}]] </td> <td> [[${m.memo}]] </td>
+<td> [[${m.age}]] </td> <td> [[${m.regdate}]] </td>
+
+</tr>
+</table>
+<form id="f1" action="/guestBook/list">
+<input type="hidden" name="nowPage" th:value=1>
+<table border=1>
+<span th:if="${nowPage}!=1">
+<a th:href = "@{/guestBook/list(nowPage=1,ch1=${ch1},ch2=${ch2})}"><input type="button" class = "button" value="처음"></a> &nbsp;
+<span th:if="${nowPage} >= 10">
+<a th:href = "@{/guestBook/list(nowPage=${ps-1},ch1=${ch1},ch2=${ch2})}"><input type="button" class = "button" value="이전"></a> &nbsp;
+</span>
+<span th:if="${nowPage} < 10">
+<a th:href = "@{/guestBook/list(nowPage=1,ch1=${ch1},ch2=${ch2})}"><input type="button" class = "button" value="이전"></a> &nbsp;
+</span>
+</span>
+
+<span th:if="${nowPage} ==1">
+<input type="button" class = "button" value="처음"> &nbsp;
+<input type="button" class = "button" value="이전"> &nbsp;
+</span>
+
+<tr th:each="m : ${#numbers.sequence({ps},{pe})} "  align="center">
+	<span th:if="${m} <= ${tp}">
+	<a th:href = "@{/guestBook/list(nowPage=${m},ch1=${ch1},ch2=${ch2})}" > [[${m}]] </a> &nbsp;
+	</span>
+</tr>
+
+<span th:if="${nowPage} != ${tp}">
+<span th:if="${pe} > ${tp}">
+<a th:href = "@{/guestBook/list(nowPage=${tp},ch1=${ch1},ch2=${ch2})}"><input type="button" class = "button" value="다음"></a>&nbsp;
+</span>
+<span th:if="${pe} <= ${tp}">
+<a th:href = "@{/guestBook/list(nowPage=${pe+1},ch1=${ch1},ch2=${ch2})}"><input type="button" class = "button" value="다음"></a>&nbsp;
+</span>
+
+<a th:href = "@{/guestBook/list(nowPage=${tp},ch1=${ch1},ch2=${ch2})}"><input type="button" class = "button" value="마지막"></a>
+</span>
+<span th:if="${nowPage} == ${tp}">
+<input type="button" class = "button" value="다음">&nbsp;
+<input type="button" class = "button" value="마지막">
+</span>
+<br>
+<tr>
+	<select name="ch1">
+		<option value="name"> 이름 </option>
+		<option value="memo"> 내용 </option>
+	</select>
+	<input type = "text" name = "ch2"></tr>
+	<input type = "submit" value="검색하기" class="button">
+</form>
+</table>
+</div>
+<br>
+</section>
+
+<div  th:replace="~{include/bottom::footer}"></div>
+</body>
+</html>

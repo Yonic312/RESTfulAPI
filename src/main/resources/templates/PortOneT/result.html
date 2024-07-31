@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>majustory.com(결제화면)</title>
+</head>
+
+<div  th:replace="~{/include/top}"></div>
+<section>
+<br>
+<div align="center">
+     <h2> 이니시스 결제 결과화면 </h2>
+     
+     <table border=1 width=400>
+     <tr><td colspan=2>  방법 1 ( 컨트롤 값 가져오기  )  </td></tr>
+     <tr><td> mpaynum </td>        <td>   <h3 th:text="${vo1.mpaynum}"></h3> </td></tr>
+     <tr><td> mpayproduct </td>    <td> <h3 th:text="${vo1.mpayproduct}"></h3> </td></tr>
+     <tr><td> mpaydate </td>       <td>  <h3 th:text="${vo1.mpaydate}"></h3> </td></tr>
+     
+     <tr><td colspan=2>  방법 2 ( SQL 값 가져오기  )  </td></tr>   
+     <tr><td> mpaynum </td>     <td>   <h3 th:text="${vo2.mpaynum}"></h3> </td></tr>
+     <tr><td> mpayproduct </td> <td> <h3 th:text="${vo2.mpayproduct}"></h3> </td></tr>
+     <tr><td> mpaydate </td>    <td>  <h3 th:text="${vo2.mpaydate}"></h3> </td></tr>    
+     </table>
+</div>
+
+<br>
+</section>     
+
+<div  th:replace="~{/include/bottom::footer}"></div>
+</body>
