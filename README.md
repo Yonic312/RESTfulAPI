@@ -21,4 +21,3 @@
 </td>
 </tr>
 </table>
-[출처] readme.html (IT 마주이야기) | 작성자 김태익
